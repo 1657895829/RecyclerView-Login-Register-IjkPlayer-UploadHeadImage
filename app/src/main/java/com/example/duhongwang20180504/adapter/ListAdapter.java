@@ -1,0 +1,99 @@
+package com.example.duhongwang20180504.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.example.duhongwang20180504.R;
+import com.example.duhongwang20180504.activity.XiangQingActivity;
+import com.example.duhongwang20180504.bean.ListBean;
+import com.facebook.drawee.view.SimpleDraweeView;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 首页适配器
+ */
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.SearchViewHolder>{
+    private Context context;
+    private List<ListBean.DataBean> list;
+    public ListAdapter(Context context) {
+        this.context = context;
+    }
+
+    //添加数据的方法
+    public void addData(List<ListBean.DataBean> lists){
+        if (this.list == null){
+            this.list = new ArrayList<>();
+        }
+        list.clear();
+        list.addAll(lists);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = View.inflate(context, R.layout.list_item,null);
+        SearchViewHolder tuijianViewHolder = new SearchViewHolder(view);
+        return tuijianViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(SearchViewHolder holder, final int position) {
+        if(list.size()>0) {
+            if (list.get(position).getImages().contains("|")){
+                String[] split = list.get(position).getImages().split("\\|");
+                holder.search_image.setImageURI(split[0]);
+                holder.search_text.setText(list.get(position).getTitle());
+            }else {
+                holder.search_image.setImageURI(list.get(position).getImages());
+                holder.search_text.setText(list.get(position).getTitle());
+            }
+        }
+
+        //条目的点击事件
+        holder.search_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //传递商品数据将url传过去 访问详情页面
+                Intent intent = new Intent(context, XiangQingActivity.class);
+                intent.putExtra("pid", list.get(position).getPid() + "");
+                intent.putExtra("images", list.get(position).getImages());
+                intent.putExtra("bargainPrice", list.get(position).getBargainPrice() + "");
+                intent.putExtra("title", list.get(position).getTitle());
+                intent.putExtra("price", list.get(position).getPrice() + "");
+                context.startActivity(intent);
+            }
+        });
+        holder.search_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //传递商品数据将url传过去 访问详情页面
+                Intent intent = new Intent(context, XiangQingActivity.class);
+                intent.putExtra("pid", list.get(position).getPid() + "");
+                intent.putExtra("images", list.get(position).getImages());
+                intent.putExtra("bargainPrice", list.get(position).getBargainPrice() + "");
+                intent.putExtra("title", list.get(position).getTitle());
+                intent.putExtra("price", list.get(position).getPrice() + "");
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return list == null ? 0 :list.size() ;
+    }
+
+    public static class SearchViewHolder extends RecyclerView.ViewHolder {
+        private final SimpleDraweeView search_image;
+        private final TextView search_text;
+        public SearchViewHolder(View itemView) {
+            super(itemView);
+            search_image = (SimpleDraweeView) itemView.findViewById(R.id.search_image);
+            search_text = (TextView) itemView.findViewById(R.id.search_text);
+        }
+    }
+}
