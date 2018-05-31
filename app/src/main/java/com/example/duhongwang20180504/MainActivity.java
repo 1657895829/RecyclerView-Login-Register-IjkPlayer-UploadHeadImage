@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements LoginViewCallBack
                 } else {
                     Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
                 }
-                finish();
+                //finish();
                 break;
             case R.id.qq_Login:
                 Toast.makeText(MainActivity.this,"QQ登录",Toast.LENGTH_SHORT).show();

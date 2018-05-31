@@ -73,7 +73,7 @@ public class XiangQingActivity extends AppCompatActivity {
         mCustomXqViewpager.setAdapter(viewPagerAdapter);
 
         //视频播放地址
-        String url ="http://ips.ifeng.com/video19.ifeng.com/video09/2014/06/16/1989823-102-086-0009.mp4";
+        String url ="http://mp4.vjshi.com/2018-05-12/52a8363ba520cb3e181e885576a492c4.mp4";
         play = new PlayerView(this)
                 .setTitle("视频")
                 .setScaleType(PlayStateParams.fitparent)
